@@ -5,16 +5,19 @@ import react.dom.button
 import react.dom.jsStyle
 import react.functionalComponent
 import react.memo
-import react.useContext
+import react.redux.useDispatch
+import react.redux.useSelector
+import redux.RAction
 
 external interface FilterLinkProps : RProps {
     var filter: VisibilityFilter
 }
 
 val FilterLink = memo(functionalComponent<FilterLinkProps>("FilterLink") { props ->
-    val (state, setState) = useContext(StateContext)
+    val visibilityFilter = useSelector { state: State -> state.visibilityFilter }
+    val dispatch = useDispatch<RAction, Unit>()
 
-    val active = props.filter === state.visibilityFilter
+    val active = props.filter === visibilityFilter
 
     button {
         attrs {
@@ -23,9 +26,7 @@ val FilterLink = memo(functionalComponent<FilterLinkProps>("FilterLink") { props
                 marginLeft = "4px"
             }
             onClickFunction = {
-                setState {
-                    it.copy(visibilityFilter = props.filter)
-                }
+                dispatch(SetVisibilityFilter(props.filter))
             }
         }
 

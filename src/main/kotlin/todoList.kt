@@ -1,10 +1,13 @@
-import react.*
+import react.child
 import react.dom.ul
+import react.functionalComponent
+import react.memo
+import react.redux.useSelector
+import react.useMemo
 
 val TodoList = memo(functionalComponent("TodoList") {
-    val (state) = useContext(StateContext)
-    val todos = state.todos
-    val visibilityFilter = state.visibilityFilter
+    val todos = useSelector{ state: State -> state.todos }
+    val visibilityFilter = useSelector{ state: State -> state.visibilityFilter }
 
     val visibleTodos = useMemo(todos, visibilityFilter) {
         when (visibilityFilter) {
@@ -19,7 +22,7 @@ val TodoList = memo(functionalComponent("TodoList") {
             child(TodoItem) {
                 key = index.toString()
                 attrs {
-                    todo = visibleTodo
+                    todoId = visibleTodo.id
                 }
             }
         }

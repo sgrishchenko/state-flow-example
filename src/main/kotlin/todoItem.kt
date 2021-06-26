@@ -5,37 +5,30 @@ import react.dom.jsStyle
 import react.dom.li
 import react.functionalComponent
 import react.memo
-import react.useContext
+import react.redux.useDispatch
+import react.redux.useSelector
+import redux.RAction
 
 external interface TodoItemProps : RProps {
-    var todo: Todo
+    var todoId: Int
 }
 
 val TodoItem = memo(functionalComponent<TodoItemProps>("TodoItem") { props ->
-    val (_, setState) = useContext(StateContext)
+    val todo = useSelector{state: State -> state.todos.find { it.id == props.todoId } }
+    val dispatch = useDispatch<RAction, Unit>()
+
+    if (todo == null) return@functionalComponent
 
     li {
         attrs {
             jsStyle {
-                textDecoration = if (props.todo.completed) "line-through" else "none"
+                textDecoration = if (todo.completed) "line-through" else "none"
             }
             onClickFunction = {
-                setState {
-                    it.copy(
-                        todos = it.todos.map { todo ->
-                            if (todo == props.todo) {
-                                todo.copy(
-                                    completed = !todo.completed
-                                )
-                            } else {
-                                todo
-                            }
-                        }
-                    )
-                }
+                dispatch(ToggleTodo(todo.id))
             }
         }
 
-        +props.todo.text
+        +todo.text
     }
 })

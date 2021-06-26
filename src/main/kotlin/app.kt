@@ -1,19 +1,13 @@
-import react.*
+import react.child
 import react.dom.div
+import react.functionalComponent
+import react.memo
 
 val App = memo(functionalComponent("App") {
 
-    val (state, setState) = useState(State())
-
-    StateContext.Provider {
-        attrs {
-            value = Pair(state, setState::invoke)
-        }
-
-        div {
-            child(AddTodo)
-            child(TodoList)
-            child(Footer)
-        }
+    div {
+        child(TodoForm)
+        child(TodoList)
+        child(Footer)
     }
 })

@@ -1,4 +1,3 @@
-import react.createContext
 import kotlin.random.Random
 
 data class Todo(
@@ -17,7 +16,3 @@ data class State(
     val todos: List<Todo> = emptyList(),
     val visibilityFilter: VisibilityFilter = VisibilityFilter.SHOW_ALL
 )
-
-typealias StateSetter = ((State) -> State) -> Unit
-
-val StateContext = createContext(Pair<State, StateSetter>(State()) {})

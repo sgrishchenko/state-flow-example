@@ -1,11 +1,15 @@
 import kotlinx.html.ButtonType
 import kotlinx.html.js.onSubmitFunction
 import org.w3c.dom.HTMLInputElement
-import react.*
 import react.dom.*
+import react.functionalComponent
+import react.memo
+import react.redux.useDispatch
+import react.useRef
+import redux.RAction
 
-val AddTodo = memo(functionalComponent("AddTodo") {
-    val (_, setState) = useContext(StateContext)
+val TodoForm = memo(functionalComponent("TodoForm") {
+    val dispatch = useDispatch<RAction, Unit>()
     val input = useRef<HTMLInputElement>()
 
     div {
@@ -17,9 +21,7 @@ val AddTodo = memo(functionalComponent("AddTodo") {
                     val value = input.current?.value
 
                     if (!value.isNullOrBlank()) {
-                        setState {
-                            it.copy(todos = it.todos + Todo(text = value))
-                        }
+                        dispatch(AddTodo(value))
                         input.current?.value = ""
                     }
 
