@@ -12,7 +12,7 @@ external interface TodoItemProps : RProps {
 }
 
 val TodoItem = memo(functionalComponent<TodoItemProps>("TodoItem") { props ->
-    val (_, setState) = useContext(StateContext)
+    val setState = useContext(StateSetterContext)
 
     li {
         attrs {

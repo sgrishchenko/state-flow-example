@@ -20,4 +20,5 @@ data class State(
 
 typealias StateSetter = ((State) -> State) -> Unit
 
-val StateContext = createContext(Pair<State, StateSetter>(State()) {})
+val StateContext = createContext(State())
+val StateSetterContext = createContext<StateSetter> {}

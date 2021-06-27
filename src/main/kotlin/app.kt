@@ -5,15 +5,23 @@ val App = memo(functionalComponent("App") {
 
     val (state, setState) = useState(State())
 
-    StateContext.Provider {
+    val stateSetter = useCallback<StateSetter>(setState) { setState(it) }
+
+    StateSetterContext.Provider {
         attrs {
-            value = Pair(state, setState::invoke)
+            value = stateSetter
         }
 
-        div {
-            child(AddTodo)
-            child(TodoList)
-            child(Footer)
+        StateContext.Provider {
+            attrs {
+                value = state
+            }
+
+            div {
+                child(AddTodo)
+                child(TodoList)
+                child(Footer)
+            }
         }
     }
 })

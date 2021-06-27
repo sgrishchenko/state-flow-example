@@ -5,7 +5,7 @@ import react.*
 import react.dom.*
 
 val AddTodo = memo(functionalComponent("AddTodo") {
-    val (_, setState) = useContext(StateContext)
+    val setState = useContext(StateSetterContext)
     val input = useRef<HTMLInputElement>()
 
     div {

@@ -2,7 +2,7 @@ import react.*
 import react.dom.ul
 
 val TodoList = memo(functionalComponent("TodoList") {
-    val (state) = useContext(StateContext)
+    val state = useContext(StateContext)
     val todos = state.todos
     val visibilityFilter = state.visibilityFilter
 

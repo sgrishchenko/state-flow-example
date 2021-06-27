@@ -12,7 +12,8 @@ external interface FilterLinkProps : RProps {
 }
 
 val FilterLink = memo(functionalComponent<FilterLinkProps>("FilterLink") { props ->
-    val (state, setState) = useContext(StateContext)
+    val state = useContext(StateContext)
+    val setState = useContext(StateSetterContext)
 
     val active = props.filter === state.visibilityFilter
 
