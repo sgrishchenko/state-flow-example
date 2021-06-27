@@ -1,13 +1,14 @@
+import kotlinx.coroutines.flow.MutableStateFlow
 import react.*
 import react.dom.div
 
 val App = memo(functionalComponent("App") {
 
-    val (state, setState) = useState(State())
+    val state by useState { MutableStateFlow(State()) }
 
     StateContext.Provider {
         attrs {
-            value = Pair(state, setState::invoke)
+            value = state
         }
 
         div {

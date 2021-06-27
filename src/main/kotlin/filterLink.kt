@@ -1,3 +1,4 @@
+import hooks.useFlowEmit
 import kotlinx.html.js.onClickFunction
 import react.RProps
 import react.dom.attrs
@@ -12,7 +13,8 @@ external interface FilterLinkProps : RProps {
 }
 
 val FilterLink = memo(functionalComponent<FilterLinkProps>("FilterLink") { props ->
-    val (state, setState) = useContext(StateContext)
+    val flow = useContext(StateContext)
+    val (state, emit) = useFlowEmit(flow)
 
     val active = props.filter === state.visibilityFilter
 
@@ -23,7 +25,7 @@ val FilterLink = memo(functionalComponent<FilterLinkProps>("FilterLink") { props
                 marginLeft = "4px"
             }
             onClickFunction = {
-                setState {
+                emit {
                     it.copy(visibilityFilter = props.filter)
                 }
             }

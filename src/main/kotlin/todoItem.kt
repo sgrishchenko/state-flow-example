@@ -1,3 +1,4 @@
+import hooks.useEmit
 import kotlinx.html.js.onClickFunction
 import react.RProps
 import react.dom.attrs
@@ -12,7 +13,8 @@ external interface TodoItemProps : RProps {
 }
 
 val TodoItem = memo(functionalComponent<TodoItemProps>("TodoItem") { props ->
-    val (_, setState) = useContext(StateContext)
+    val flow = useContext(StateContext)
+    val emit = useEmit(flow)
 
     li {
         attrs {
@@ -20,7 +22,7 @@ val TodoItem = memo(functionalComponent<TodoItemProps>("TodoItem") { props ->
                 textDecoration = if (props.todo.completed) "line-through" else "none"
             }
             onClickFunction = {
-                setState {
+                emit {
                     it.copy(
                         todos = it.todos.map { todo ->
                             if (todo == props.todo) {

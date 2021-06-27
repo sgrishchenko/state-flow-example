@@ -1,11 +1,16 @@
+import hooks.useEmit
 import kotlinx.html.ButtonType
 import kotlinx.html.js.onSubmitFunction
 import org.w3c.dom.HTMLInputElement
-import react.*
 import react.dom.*
+import react.functionalComponent
+import react.memo
+import react.useContext
+import react.useRef
 
 val AddTodo = memo(functionalComponent("AddTodo") {
-    val (_, setState) = useContext(StateContext)
+    val flow = useContext(StateContext)
+    val emit = useEmit(flow)
     val input = useRef<HTMLInputElement>()
 
     div {
@@ -17,7 +22,7 @@ val AddTodo = memo(functionalComponent("AddTodo") {
                     val value = input.current?.value
 
                     if (!value.isNullOrBlank()) {
-                        setState {
+                        emit {
                             it.copy(todos = it.todos + Todo(text = value))
                         }
                         input.current?.value = ""

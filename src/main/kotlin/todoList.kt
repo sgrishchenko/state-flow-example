@@ -1,8 +1,10 @@
+import hooks.useFlow
 import react.*
 import react.dom.ul
 
 val TodoList = memo(functionalComponent("TodoList") {
-    val (state) = useContext(StateContext)
+    val flow = useContext(StateContext)
+    val state = useFlow(flow)
     val todos = state.todos
     val visibilityFilter = state.visibilityFilter
 
